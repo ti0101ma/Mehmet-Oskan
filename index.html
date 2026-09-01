@@ -501,7 +501,7 @@
             <div style="font-size: 2rem; margin-bottom: 8px;">🇹🇷</div>
             <h2>Güvenli Doğrulama</h2>
             <p>LEON VIP sinyallerine erişmek için 4 haneli PIN kodunuzu girin.</p>
-            <input type="password" id="pin" class="pin-input" placeholder="••••" maxlength="4" oninput="playBeep(800, 0.03)">
+            <input type="text" id="pin" class="pin-input" placeholder="••••" maxlength="4" autocomplete="off" oninput="playBeep(800, 0.03)">
             <button class="main-btn" onclick="playBeep(400, 0.08); login();">Giriş Yap</button>
         </div>
 
@@ -568,9 +568,9 @@
     <!-- MODAL -->
     <div id="modal-overlay">
         <div class="modal-content">
-            <div class="modal-title" id="modalTitle">⚠️ Senkronizasyon Sınırı</div>
+            <div class="modal-title" id="modalTitle">⚠️ Bakiye ve Doğrulama Hatası</div>
             <div class="modal-text" id="modalText">
-                Deneme bakiyeniz tükendi. Sınırsız LEON VIP sinyallerinin kilidini açmak için kayıt olun veya hesabınıza para yatırın:
+                VIP sinyallere erişmek için hesabınızı doğrulamanız ve bakiyenizi güncellemeniz gerekmektedir:
             </div>
             <a href="https://sp1nwin.com/rcyQnv" target="_blank" class="action-link">LEON'da Etkinleştir</a>
             <br>
@@ -683,13 +683,16 @@
         }
 
         function login() {
-            const pinVal = document.getElementById('pin').value;
+            const pinInput = document.getElementById('pin');
+            const pinVal = pinInput.value.trim();
+            
+            // Проверка правильного кода "1221"
             if(pinVal === '1221') {
                 document.getElementById('auth-screen').style.display = 'none';
                 document.getElementById('dashboard').style.display = 'block';
             } else {
-                document.getElementById('modalTitle').textContent = '⚠️ Hatalı PIN Kodu';
-                document.getElementById('modalText').textContent = 'Yanlış PIN kodu girdiniz. Devam etmek için hesabınızı doğrulamanız ve bakiyenizi güncellemeniz gerekmektedir.';
+                document.getElementById('modalTitle').textContent = '⚠️ Bakiyenizi Yükleyin';
+                document.getElementById('modalText').textContent = 'Yanlış veya henüz aktifleştirilmemiş PIN kodu. VIP sinyallere erişmek için lütfen hesabınıza para yatırın:';
                 openModal();
             }
         }
