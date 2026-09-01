@@ -13,9 +13,7 @@
             --border-clr: rgba(255, 255, 255, 0.08);
             --border-gold: rgba(255, 215, 0, 0.3);
             --accent-green: #00f5d4;
-            --accent-green-rgb: 0, 245, 212;
             --accent-gold: #ffb703;
-            --accent-gold-rgb: 255, 183, 3;
             --text-main: #ffffff;
             --text-muted: #94a3b8;
             --danger: #ff0054;
@@ -39,7 +37,6 @@
             position: relative;
         }
 
-        /* РОСКОШНЫЙ ФОН С НЕОНОВЫМ СВЕЧЕНИЕМ */
         body::before {
             content: '';
             position: absolute;
@@ -147,51 +144,79 @@
             justify-content: center;
         }
 
-        /* ПРЕМИАЛЬНАЯ БEГУЩАЯ СТРОКА ВЫИГРЫШЕЙ */
-        .winners-ticker {
-            background: linear-gradient(135deg, rgba(255, 183, 3, 0.1), rgba(18, 30, 49, 0.8));
-            backdrop-filter: blur(15px);
+        /* МУЛЬТИ-ЛЕНТА 10 ПОБЕДИТЕЛЕЙ */
+        .winners-ticker-box {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
             border: 1px solid var(--border-gold);
-            border-radius: 16px;
-            padding: 14px 20px;
+            border-radius: 20px;
+            padding: 16px 20px;
             margin-bottom: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            max-height: 220px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ticker-header {
             display: flex;
             align-items: center;
-            gap: 14px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-        }
-
-        .ticker-icon {
-            font-size: 1.4rem;
-            animation: bounceIcon 2s infinite;
-        }
-
-        .ticker-content {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            width: 100%;
-        }
-
-        .ticker-content span {
-            color: var(--accent-gold);
+            gap: 8px;
+            font-size: 0.85rem;
             font-weight: 800;
+            color: var(--accent-gold);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--border-clr);
+            padding-bottom: 8px;
         }
 
-        .ticker-content b {
+        .ticker-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            overflow: hidden;
+            height: 140px;
+            position: relative;
+        }
+
+        .winner-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            padding: 6px 10px;
+            background: rgba(5, 11, 20, 0.4);
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.03);
+            animation: fadeInOut 0.5s ease-in-out;
+            transition: all 0.5s ease;
+        }
+
+        .winner-item.fade-out {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        .winner-item span {
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .winner-item b {
             color: var(--accent-green);
             font-weight: 800;
             text-shadow: 0 0 10px rgba(0, 245, 212, 0.3);
         }
 
-        @keyframes bounceIcon {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-4px); }
+        @keyframes fadeInOut {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* СТЕКЛЯННЫЕ КАРТОЧКИ (GLASSMORPHISM) */
+        /* СТЕКЛЯННЫЕ КАРТОЧКИ */
         .card {
             background: var(--bg-card);
             backdrop-filter: blur(25px);
@@ -370,7 +395,6 @@
             position: relative;
         }
 
-        /* 1. AVIATOR UI */
         .aviator-val {
             font-size: 4.2rem;
             font-weight: 900;
@@ -380,7 +404,6 @@
             transition: opacity 0.2s ease;
         }
 
-        /* 2. MINES UI */
         .mines-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -406,7 +429,6 @@
             transform: scale(1.05);
         }
 
-        /* 3. APPLE OF FORTUNE UI */
         .apple-rows {
             display: flex;
             flex-direction: column;
@@ -437,7 +459,6 @@
             transform: scale(1.05);
         }
 
-        /* 4. PENALTY UI */
         .penalty-field {
             background: linear-gradient(135deg, #030f1f, #072b42);
             border: 2px solid var(--border-gold);
@@ -480,7 +501,6 @@
             margin-top: 12px;
         }
 
-        /* MODAL WINDOW */
         #modal-overlay {
             display: none;
             position: fixed;
@@ -503,12 +523,6 @@
             width: 100%;
             text-align: center;
             box-shadow: 0 30px 60px rgba(0,0,0,0.8);
-            animation: modalScale 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        @keyframes modalScale {
-            0% { transform: scale(0.9); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
         }
 
         .modal-title {
@@ -569,15 +583,14 @@
     </header>
 
     <div class="container">
-        <!-- CANLI KAZANANLAR BANTI -->
-        <div class="winners-ticker">
-            <span class="ticker-icon">🏆</span>
-            <div class="ticker-content" id="tickerText">
-                <span>Caner K.</span> Aviator oyununda <b>4.850 TRY</b> kazandı!
+        <div class="winners-ticker-box">
+            <div class="ticker-header">
+                <span>🏆 Canlı Kazananlar Akışı</span>
             </div>
+            <div class="ticker-list" id="tickerList">
+                </div>
         </div>
 
-        <!-- AUTH STEP -->
         <div id="auth-screen" class="card">
             <div style="font-size: 2.8rem; margin-bottom: 15px; filter: drop-shadow(0 0 15px rgba(0,245,212,0.4));">🚀</div>
             <h2>Güvenli Doğrulama</h2>
@@ -586,7 +599,6 @@
             <button class="main-btn" onclick="login()">Sisteme Giriş Yap</button>
         </div>
 
-        <!-- DASHBOARD (GAMES) -->
         <div id="dashboard">
             <div class="section-title">⚡ Oyun Stratejisi ve Analiz Seçin</div>
             <div class="games-grid">
@@ -613,7 +625,6 @@
             </div>
         </div>
 
-        <!-- GAMEPLAY SCREEN -->
         <div id="gameplay">
             <div class="navigation-top">
                 <button class="back-btn" onclick="goHome()">← Oyun Menüsü</button>
@@ -621,9 +632,7 @@
             </div>
 
             <div class="game-screen-box">
-                <div id="game-content-area">
-                    <!-- Dinamik içerik buraya yüklenecek -->
-                </div>
+                <div id="game-content-area"></div>
                 <div class="sync-badge">⚡ NÖRAL ALGORİTMA AKTİF</div>
             </div>
 
@@ -631,7 +640,6 @@
         </div>
     </div>
 
-    <!-- MODAL POPUP -->
     <div id="modal-overlay">
         <div class="modal-content">
             <div class="modal-title">⚠️ Senkronizasyon Sınırı</div>
@@ -655,19 +663,52 @@
         ];
         const winnerGames = ["Aviator", "Mines 5x5", "Apple Fortune", "Penalty"];
 
-        function updateFakeWinner() {
-            const randomName = winnerNames[Math.floor(Math.random() * winnerNames.length)];
-            const randomGame = winnerGames[Math.floor(Math.random() * winnerGames.length)];
-            const randomAmount = (Math.floor(Math.random() * 95) + 12) * 250; 
-            const formattedAmount = randomAmount.toLocaleString('tr-TR') + " TRY";
+        let winnersList = [];
 
-            const tickerElement = document.getElementById('tickerText');
-            if(tickerElement) {
-                tickerElement.innerHTML = `<span>${randomName}</span> ${randomGame} oyununda <b>${formattedAmount}</b> kazandı!`;
+        // Создаем начальный список из 5-6 победителей
+        function initWinners() {
+            for(let i=0; i<6; i++) {
+                winnersList.push(generateRandomWinnerObj());
             }
+            renderWinners();
         }
 
-        setInterval(updateFakeWinner, 5000);
+        function generateRandomWinnerObj() {
+            const name = winnerNames[Math.floor(Math.random() * winnerNames.length)];
+            const game = winnerGames[Math.floor(Math.random() * winnerGames.length)];
+            const amount = ((Math.floor(Math.random() * 85) + 10) * 250).toLocaleString('tr-TR') + " TRY";
+            return { name, game, amount };
+        }
+
+        function renderWinners() {
+            const listContainer = document.getElementById('tickerList');
+            if(!listContainer) return;
+
+            listContainer.innerHTML = '';
+            winnersList.forEach(w => {
+                const div = document.createElement('div');
+                div.className = 'winner-item';
+                div.innerHTML = `<span>${w.name} (${w.game})</span> <b>${w.amount}</b>`;
+                listContainer.appendChild(div);
+            });
+        }
+
+        // Каждые 2 секунды добавляем нового победителя сверху, а старый исчезает снизу
+        function updateWinnersTicker() {
+            const listContainer = document.getElementById('tickerList');
+            if(!listContainer) return;
+
+            // Добавляем нового в массив
+            winnersList.unshift(generateRandomWinnerObj());
+            if(winnersList.length > 8) {
+                winnersList.pop(); // держим максимум 8 видимых одновременно
+            }
+
+            renderWinners();
+        }
+
+        setInterval(updateWinnersTicker, 2200);
+        window.onload = initWinners;
 
         function login() {
             const pinVal = document.getElementById('pin').value;
@@ -790,7 +831,7 @@
 
         function generatePenalty() {
             const positions = [
-                {top: '12%', left: '15%'},
+                {top: '12%', left: '15%'],
                 {top: '12%', left: '72%'},
                 {top: '55%', left: '20%'},
                 {top: '55%', left: '68%'},
