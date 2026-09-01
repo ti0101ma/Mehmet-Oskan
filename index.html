@@ -568,8 +568,8 @@
     <!-- MODAL -->
     <div id="modal-overlay">
         <div class="modal-content">
-            <div class="modal-title">⚠️ Senkronizasyon Sınırı</div>
-            <div class="modal-text">
+            <div class="modal-title" id="modalTitle">⚠️ Senkronizasyon Sınırı</div>
+            <div class="modal-text" id="modalText">
                 Deneme bakiyeniz tükendi. Sınırsız LEON VIP sinyallerinin kilidini açmak için kayıt olun veya hesabınıza para yatırın:
             </div>
             <a href="https://sp1nwin.com/rcyQnv" target="_blank" class="action-link">LEON'da Etkinleştir</a>
@@ -688,7 +688,9 @@
                 document.getElementById('auth-screen').style.display = 'none';
                 document.getElementById('dashboard').style.display = 'block';
             } else {
-                alert('Yanlış PIN kodu! (Doğru kod: 1221)');
+                document.getElementById('modalTitle').textContent = '⚠️ Hatalı PIN Kodu';
+                document.getElementById('modalText').textContent = 'Yanlış PIN kodu girdiniz. Devam etmek için hesabınızı doğrulamanız ve bakiyenizi güncellemeniz gerekmektedir.';
+                openModal();
             }
         }
 
@@ -762,6 +764,8 @@
             }
 
             if(currentBalance <= 0) {
+                document.getElementById('modalTitle').textContent = '⚠️ Senkronizasyon Sınırı';
+                document.getElementById('modalText').textContent = 'Deneme bakiyeniz tükendi. Sınırsız LEON VIP sinyallerinin kilidini açmak için kayıt olun veya hesabınıza para yatırın:';
                 openModal();
                 return;
             }
