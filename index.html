@@ -51,22 +51,6 @@
             pointer-events: none;
         }
 
-        body::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                radial-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-            background-size: 40px 40px;
-            background-position: 0 0, 20px 20px;
-            z-index: -2;
-            pointer-events: none;
-        }
-
         header {
             width: 100%;
             background: rgba(5, 11, 20, 0.85);
@@ -120,7 +104,7 @@
             font-weight: 800;
             font-size: 0.95rem;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s;
             box-shadow: 0 0 20px rgba(0, 245, 212, 0.1);
             display: flex;
             align-items: center;
@@ -131,7 +115,6 @@
             background: rgba(0, 245, 212, 0.2);
             border-color: var(--accent-green);
             transform: translateY(-2px);
-            box-shadow: 0 0 25px rgba(0, 245, 212, 0.3);
         }
 
         .container {
@@ -144,7 +127,7 @@
             justify-content: center;
         }
 
-        /* МУЛЬТИ-ЛЕНТА 10 ПОБЕДИТЕЛЕЙ */
+        /* БЛОК НА 10 ПОБЕДИТЕЛЕЙ */
         .winners-ticker-box {
             background: var(--bg-card);
             backdrop-filter: blur(20px);
@@ -153,9 +136,6 @@
             padding: 16px 20px;
             margin-bottom: 25px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-            max-height: 220px;
-            display: flex;
-            flex-direction: column;
         }
 
         .ticker-header {
@@ -175,29 +155,38 @@
         .ticker-list {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
+            max-height: 290px;
             overflow: hidden;
-            height: 140px;
-            position: relative;
         }
 
         .winner-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
-            padding: 6px 10px;
-            background: rgba(5, 11, 20, 0.4);
+            padding: 5px 10px;
+            background: rgba(5, 11, 20, 0.5);
             border-radius: 8px;
             border: 1px solid rgba(255,255,255,0.03);
-            animation: fadeInOut 0.5s ease-in-out;
-            transition: all 0.5s ease;
+            transition: all 0.4s ease-in-out;
         }
 
+        /* Плавное появление нового сверху */
+        .winner-item.new-item {
+            animation: slideDown 0.4s ease-out forwards;
+        }
+
+        /* Плавное исчезновение старого снизу */
         .winner-item.fade-out {
             opacity: 0;
-            transform: translateY(-10px);
+            transform: translateY(10px);
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .winner-item span {
@@ -211,16 +200,10 @@
             text-shadow: 0 0 10px rgba(0, 245, 212, 0.3);
         }
 
-        @keyframes fadeInOut {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* СТЕКЛЯННЫЕ КАРТОЧКИ */
+        /* КАРТОЧКА С ИГРАМИ / ЛОГИНОМ */
         .card {
             background: var(--bg-card);
             backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
             border: 1px solid var(--border-clr);
             border-radius: 24px;
             padding: 40px 30px;
@@ -229,18 +212,10 @@
             position: relative;
         }
 
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
-        }
-
         .card h2 {
             font-size: 1.7rem;
             margin-bottom: 12px;
             font-weight: 800;
-            letter-spacing: -0.5px;
         }
 
         .card p {
@@ -268,7 +243,6 @@
         .pin-input:focus {
             border-color: var(--accent-green);
             box-shadow: 0 0 25px rgba(0, 245, 212, 0.25);
-            background: rgba(5, 11, 20, 0.9);
         }
 
         .main-btn {
@@ -281,7 +255,7 @@
             border-radius: 16px;
             font-size: 1.1rem;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s;
             box-shadow: 0 10px 30px rgba(0, 245, 212, 0.3);
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -290,11 +264,8 @@
         .main-btn:hover { 
             transform: translateY(-2px);
             box-shadow: 0 15px 40px rgba(0, 245, 212, 0.5); 
-            filter: brightness(1.05);
         }
-        .main-btn:active { transform: scale(0.98); }
 
-        /* DASHBOARD */
         #dashboard { display: none; width: 100%; }
 
         .section-title {
@@ -304,10 +275,6 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             font-weight: 800;
-            text-shadow: 0 0 10px rgba(255, 183, 3, 0.3);
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
         .games-grid {
@@ -324,9 +291,7 @@
             padding: 28px 16px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
+            transition: all 0.3s;
             box-shadow: 0 15px 35px rgba(0,0,0,0.4);
         }
 
@@ -334,17 +299,9 @@
             border-color: var(--accent-green);
             transform: translateY(-6px);
             background: var(--bg-card-hover);
-            box-shadow: 0 20px 45px rgba(0, 245, 212, 0.2);
         }
 
-        .game-icon { 
-            font-size: 3rem; 
-            margin-bottom: 14px; 
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
-            transition: transform 0.3s;
-        }
-        .game-card:hover .game-icon { transform: scale(1.1); }
-
+        .game-icon { font-size: 3rem; margin-bottom: 14px; }
         .game-name { font-weight: 800; font-size: 1.15rem; margin-bottom: 8px; color: #fff; }
         
         .game-status { 
@@ -356,10 +313,8 @@
             padding: 5px 12px; 
             border-radius: 30px; 
             display: inline-block; 
-            letter-spacing: 0.5px;
         }
 
-        /* GAMEPLAY SCREENS */
         #gameplay { display: none; width: 100%; }
 
         .navigation-top {
@@ -378,10 +333,8 @@
             cursor: pointer;
             font-size: 0.85rem;
             font-weight: 700;
-            transition: all 0.2s;
-            backdrop-filter: blur(10px);
         }
-        .back-btn:hover { border-color: var(--text-muted); background: var(--bg-card-hover); }
+        .back-btn:hover { background: var(--bg-card-hover); }
 
         .game-screen-box {
             background: var(--bg-card);
@@ -392,17 +345,9 @@
             text-align: center;
             margin-bottom: 20px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-            position: relative;
         }
 
-        .aviator-val {
-            font-size: 4.2rem;
-            font-weight: 900;
-            color: var(--accent-gold);
-            margin: 15px 0;
-            text-shadow: 0 0 30px rgba(255, 183, 3, 0.4);
-            transition: opacity 0.2s ease;
-        }
+        .aviator-val { font-size: 4.2rem; font-weight: 900; color: var(--accent-gold); margin: 15px 0; }
 
         .mines-grid {
             display: grid;
@@ -420,13 +365,10 @@
             align-items: center;
             justify-content: center;
             font-size: 1.3rem;
-            transition: all 0.3s;
         }
         .mine-cell.safe {
             background: rgba(0, 245, 212, 0.2);
             border-color: var(--accent-green);
-            box-shadow: 0 0 20px rgba(0, 245, 212, 0.4);
-            transform: scale(1.05);
         }
 
         .apple-rows {
@@ -436,28 +378,9 @@
             max-width: 300px;
             margin: 20px auto;
         }
-        .apple-row {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 8px;
-        }
-        .apple-cell {
-            background: rgba(5, 11, 20, 0.6);
-            border: 1px solid var(--border-clr);
-            border-radius: 10px;
-            padding: 12px 0;
-            font-size: 1.1rem;
-            text-align: center;
-            opacity: 0.35;
-            transition: all 0.3s;
-        }
-        .apple-cell.highlight {
-            background: rgba(0, 245, 212, 0.25);
-            border-color: var(--accent-green);
-            opacity: 1;
-            box-shadow: 0 0 15px rgba(0, 245, 212, 0.4);
-            transform: scale(1.05);
-        }
+        .apple-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+        .apple-cell { background: rgba(5, 11, 20, 0.6); border: 1px solid var(--border-clr); border-radius: 10px; padding: 12px 0; text-align: center; opacity: 0.35; }
+        .apple-cell.highlight { background: rgba(0, 245, 212, 0.25); border-color: var(--accent-green); opacity: 1; }
 
         .penalty-field {
             background: linear-gradient(135deg, #030f1f, #072b42);
@@ -467,109 +390,36 @@
             position: relative;
             max-width: 340px;
             margin: 20px auto;
-            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: inset 0 0 30px rgba(0,0,0,0.6);
         }
         .goal-target {
-            width: 55px;
-            height: 55px;
-            border: 2px dashed rgba(255,255,255,0.9);
-            border-radius: 50%;
-            position: absolute;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
+            width: 55px; height: 55px; border: 2px dashed rgba(255,255,255,0.9); border-radius: 50%;
+            position: absolute; display: flex; align-items: center; justify-content: center; font-size: 1.6rem;
             background: rgba(0, 245, 212, 0.15);
-            box-shadow: 0 0 20px rgba(0, 245, 212, 0.4);
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .sync-badge {
-            background: rgba(255, 183, 3, 0.1);
-            color: var(--accent-gold);
-            border: 1px solid rgba(255, 183, 3, 0.3);
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-size: 0.75rem;
-            font-weight: 800;
-            display: inline-block;
-            letter-spacing: 1px;
-            margin-top: 12px;
+            background: rgba(255, 183, 3, 0.1); color: var(--accent-gold); border: 1px solid rgba(255, 183, 3, 0.3);
+            padding: 8px 16px; border-radius: 30px; font-size: 0.75rem; font-weight: 800; display: inline-block; margin-top: 12px;
         }
 
         #modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(5, 11, 20, 0.85);
-            backdrop-filter: blur(20px);
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-            padding: 20px;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 11, 20, 0.85); backdrop-filter: blur(20px);
+            justify-content: center; align-items: center; z-index: 100; padding: 20px;
         }
-
         .modal-content {
-            background: var(--bg-card);
-            backdrop-filter: blur(30px);
-            border: 1px solid var(--border-gold);
-            border-radius: 24px;
-            padding: 40px 30px;
-            max-width: 400px;
-            width: 100%;
-            text-align: center;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+            background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 24px; padding: 40px 30px; max-width: 400px; width: 100%; text-align: center;
         }
-
-        .modal-title {
-            color: var(--danger);
-            font-size: 1.35rem;
-            font-weight: 900;
-            margin-bottom: 12px;
-        }
-
-        .modal-text {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 25px;
-        }
-
+        .modal-title { color: var(--danger); font-size: 1.35rem; font-weight: 900; margin-bottom: 12px; }
+        .modal-text { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 25px; }
         .action-link {
-            background: linear-gradient(135deg, var(--accent-green), #00b4d8);
-            color: #050b14;
-            text-decoration: none;
-            font-weight: 900;
-            padding: 16px;
-            border-radius: 14px;
-            display: block;
-            font-size: 1rem;
-            transition: all 0.2s;
-            box-shadow: 0 10px 25px rgba(0, 245, 212, 0.4);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, var(--accent-green), #00b4d8); color: #050b14; text-decoration: none; font-weight: 900;
+            padding: 16px; border-radius: 14px; display: block; font-size: 1rem; text-transform: uppercase;
         }
-        .action-link:hover { filter: brightness(1.05); transform: translateY(-2px); }
-
-        .close-modal-btn {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            margin-top: 20px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            font-weight: 700;
-            transition: color 0.2s;
-        }
-        .close-modal-btn:hover { color: #fff; }
-
-        @media (max-width: 480px) {
-            .games-grid { grid-template-columns: 1fr; }
-        }
+        .close-modal-btn { background: none; border: none; color: var(--text-muted); margin-top: 20px; cursor: pointer; font-size: 0.85rem; font-weight: 700; }
     </style>
 </head>
 <body>
@@ -585,14 +435,14 @@
     <div class="container">
         <div class="winners-ticker-box">
             <div class="ticker-header">
-                <span>🏆 Canlı Kazananlar Akışı</span>
+                <span>🏆 Canlı Kazananlar Akışı (10 Son Kazanç)</span>
             </div>
             <div class="ticker-list" id="tickerList">
                 </div>
         </div>
 
         <div id="auth-screen" class="card">
-            <div style="font-size: 2.8rem; margin-bottom: 15px; filter: drop-shadow(0 0 15px rgba(0,245,212,0.4));">🚀</div>
+            <div style="font-size: 2.8rem; margin-bottom: 15px;">🚀</div>
             <h2>Güvenli Doğrulama</h2>
             <p>Yapay zeka sinyal sunucusuna tam erişim sağlamak için 4 haneli PIN kodunuzu girin.</p>
             <input type="password" id="pin" class="pin-input" placeholder="••••" maxlength="4">
@@ -628,7 +478,7 @@
         <div id="gameplay">
             <div class="navigation-top">
                 <button class="back-btn" onclick="goHome()">← Oyun Menüsü</button>
-                <span id="currentGameLabel" style="font-weight: 800; color: var(--accent-gold); font-size: 1.1rem; letter-spacing: 0.5px;">Aviator</span>
+                <span id="currentGameLabel" style="font-weight: 800; color: var(--accent-gold); font-size: 1.1rem;">Aviator</span>
             </div>
 
             <div class="game-screen-box">
@@ -665,14 +515,6 @@
 
         let winnersList = [];
 
-        // Создаем начальный список из 5-6 победителей
-        function initWinners() {
-            for(let i=0; i<6; i++) {
-                winnersList.push(generateRandomWinnerObj());
-            }
-            renderWinners();
-        }
-
         function generateRandomWinnerObj() {
             const name = winnerNames[Math.floor(Math.random() * winnerNames.length)];
             const game = winnerGames[Math.floor(Math.random() * winnerGames.length)];
@@ -680,34 +522,40 @@
             return { name, game, amount };
         }
 
-        function renderWinners() {
+        // Заполняем ровно 10 штук при загрузке
+        function initWinners() {
+            for(let i=0; i<10; i++) {
+                winnersList.push(generateRandomWinnerObj());
+            }
+            renderWinners(false);
+        }
+
+        function renderWinners(isUpdate = false) {
             const listContainer = document.getElementById('tickerList');
             if(!listContainer) return;
 
             listContainer.innerHTML = '';
-            winnersList.forEach(w => {
+            winnersList.forEach((w, index) => {
                 const div = document.createElement('div');
                 div.className = 'winner-item';
+                if(isUpdate && index === 0) {
+                    div.classList.add('new-item'); // Анимация для нового сверху
+                }
                 div.innerHTML = `<span>${w.name} (${w.game})</span> <b>${w.amount}</b>`;
                 listContainer.appendChild(div);
             });
         }
 
-        // Каждые 2 секунды добавляем нового победителя сверху, а старый исчезает снизу
+        // Каждые 2 секунды добавляем сверху новый элемент, а нижний удаляем
         function updateWinnersTicker() {
-            const listContainer = document.getElementById('tickerList');
-            if(!listContainer) return;
-
-            // Добавляем нового в массив
             winnersList.unshift(generateRandomWinnerObj());
-            if(winnersList.length > 8) {
-                winnersList.pop(); // держим максимум 8 видимых одновременно
+            if(winnersList.length > 10) {
+                winnersList.pop(); // Держим строго 10 элементов
             }
-
-            renderWinners();
+            renderWinners(true);
         }
 
-        setInterval(updateWinnersTicker, 2200);
+        setInterval(updateWinnersTicker, 2000);
         window.onload = initWinners;
 
         function login() {
@@ -738,7 +586,7 @@
             const area = document.getElementById('game-content-area');
             if (currentGame === 'Aviator') {
                 area.innerHTML = `
-                    <div style="font-size:0.85rem; color:var(--text-muted); letter-spacing:1px; font-weight:700;">✈️ ÖNERİLEN ÇARPAN</div>
+                    <div style="font-size:0.85rem; color:var(--text-muted); font-weight:700;">✈️ ÖNERİLEN ÇARPAN</div>
                     <div class="aviator-val" id="aviatorVal">2.45x</div>
                 `;
             } else if (currentGame === 'Mines') {
@@ -763,7 +611,7 @@
                 generateApples();
             } else if (currentGame === 'Penalty') {
                 area.innerHTML = `
-                    <div style="font-size:0.85rem; color:var(--text-muted); letter-spacing:1px; margin-bottom:12px; font-weight:700;">⚽ YAPAY ZEKA ŞUT BÖLGESİ</div>
+                    <div style="font-size:0.85rem; color:var(--text-muted); margin-bottom:12px; font-weight:700;">⚽ YAPAY ZEKA ŞUT BÖLGESİ</div>
                     <div class="penalty-field">
                         <div class="goal-target" id="target" style="top: 25%; left: 38%;">🥅</div>
                     </div>
@@ -831,7 +679,7 @@
 
         function generatePenalty() {
             const positions = [
-                {top: '12%', left: '15%'],
+                {top: '12%', left: '15%'},
                 {top: '12%', left: '72%'},
                 {top: '55%', left: '20%'},
                 {top: '55%', left: '68%'},
@@ -845,13 +693,8 @@
             }
         }
 
-        function openModal() { 
-            document.getElementById('modal-overlay').style.display = 'flex'; 
-        }
-        
-        function closeModal() { 
-            document.getElementById('modal-overlay').style.display = 'none'; 
-        }
+        function openModal() { document.getElementById('modal-overlay').style.display = 'flex'; }
+        function closeModal() { document.getElementById('modal-overlay').style.display = 'none'; }
     </script>
 </body>
 </html>
