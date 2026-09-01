@@ -95,6 +95,35 @@
             text-shadow: 0 0 15px rgba(0, 245, 212, 0.5);
         }
 
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .ai-status-pill {
+            background: rgba(0, 245, 212, 0.08);
+            border: 1px solid rgba(0, 245, 212, 0.25);
+            padding: 8px 14px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .pulse-dot {
+            width: 8px; height: 8px; background: var(--accent-green); border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-green);
+            animation: pulseAnim 1.5s infinite;
+        }
+        @keyframes pulseAnim {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 15px var(--accent-green); }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
+
         .user-balance {
             background: rgba(0, 245, 212, 0.1);
             border: 1px solid rgba(0, 245, 212, 0.3);
@@ -110,7 +139,6 @@
             align-items: center;
             gap: 8px;
         }
-
         .user-balance:hover {
             background: rgba(0, 245, 212, 0.2);
             border-color: var(--accent-green);
@@ -127,7 +155,7 @@
             justify-content: center;
         }
 
-        /* БЛОК НА 10 ПОБЕДИТЕЛЕЙ */
+        /* 10 ПОБЕДИТЕЛЕЙ */
         .winners-ticker-box {
             background: var(--bg-card);
             backdrop-filter: blur(20px);
@@ -173,15 +201,8 @@
             transition: all 0.4s ease-in-out;
         }
 
-        /* Плавное появление нового сверху */
         .winner-item.new-item {
             animation: slideDown 0.4s ease-out forwards;
-        }
-
-        /* Плавное исчезновение старого снизу */
-        .winner-item.fade-out {
-            opacity: 0;
-            transform: translateY(10px);
         }
 
         @keyframes slideDown {
@@ -189,18 +210,45 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .winner-item span {
-            color: var(--text-main);
-            font-weight: 700;
-        }
+        .winner-item span { color: var(--text-main); font-weight: 700; }
+        .winner-item b { color: var(--accent-green); font-weight: 800; text-shadow: 0 0 10px rgba(0, 245, 212, 0.3); }
 
-        .winner-item b {
-            color: var(--accent-green);
-            font-weight: 800;
-            text-shadow: 0 0 10px rgba(0, 245, 212, 0.3);
+        /* TOAST УВЕДОМЛЕНИЯ В УГЛУ */
+        #toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
         }
+        .toast-card {
+            background: rgba(18, 30, 49, 0.95);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--accent-green);
+            border-radius: 14px;
+            padding: 12px 18px;
+            box-shadow: 0 10px 30px rgba(0,245,212,0.25);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: toastIn 0.4s ease, toastOut 0.4s ease 3.6s forwards;
+            max-width: 300px;
+        }
+        @keyframes toastIn {
+            from { opacity: 0; transform: translateY(30px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes toastOut {
+            to { opacity: 0; transform: translateY(-10px) scale(0.95); pointer-events: none; }
+        }
+        .toast-icon { font-size: 1.4rem; }
+        .toast-text { font-size: 0.780rem; line-height: 1.4; color: var(--text-muted); }
+        .toast-text b { color: var(--accent-green); font-weight: 800; }
 
-        /* КАРТОЧКА С ИГРАМИ / ЛОГИНОМ */
+        /* КАРТОЧКА АВТОРИЗАЦИИ */
         .card {
             background: var(--bg-card);
             backdrop-filter: blur(25px);
@@ -212,18 +260,8 @@
             position: relative;
         }
 
-        .card h2 {
-            font-size: 1.7rem;
-            margin-bottom: 12px;
-            font-weight: 800;
-        }
-
-        .card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
+        .card h2 { font-size: 1.7rem; margin-bottom: 12px; font-weight: 800; }
+        .card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 30px; line-height: 1.6; }
 
         .pin-input {
             width: 100%;
@@ -239,7 +277,6 @@
             outline: none;
             transition: all 0.3s;
         }
-
         .pin-input:focus {
             border-color: var(--accent-green);
             box-shadow: 0 0 25px rgba(0, 245, 212, 0.25);
@@ -260,7 +297,6 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-
         .main-btn:hover { 
             transform: translateY(-2px);
             box-shadow: 0 15px 40px rgba(0, 245, 212, 0.5); 
@@ -294,7 +330,6 @@
             transition: all 0.3s;
             box-shadow: 0 15px 35px rgba(0,0,0,0.4);
         }
-
         .game-card:hover {
             border-color: var(--accent-green);
             transform: translateY(-6px);
@@ -321,7 +356,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .back-btn {
@@ -336,6 +371,37 @@
         }
         .back-btn:hover { background: var(--bg-card-hover); }
 
+        /* ШКАЛА ПРОГРЕССА БОНУСА */
+        .bonus-progress-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-clr);
+            border-radius: 14px;
+            padding: 10px 16px;
+            margin-bottom: 15px;
+        }
+        .bonus-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--accent-gold);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+        .progress-track {
+            width: 100%;
+            height: 6px;
+            background: rgba(5, 11, 20, 0.8);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent-gold), var(--accent-green));
+            transition: width 0.4s ease;
+        }
+
         .game-screen-box {
             background: var(--bg-card);
             backdrop-filter: blur(25px);
@@ -345,16 +411,22 @@
             text-align: center;
             margin-bottom: 20px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            min-height: 220px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
         }
 
-        .aviator-val { font-size: 4.2rem; font-weight: 900; color: var(--accent-gold); margin: 15px 0; }
+        .aviator-val { font-size: 4.2rem; font-weight: 900; color: var(--accent-gold); margin: 15px 0; transition: opacity 0.2s; }
 
         .mines-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             gap: 10px;
             max-width: 320px;
-            margin: 20px auto;
+            margin: 0 auto;
         }
         .mine-cell {
             aspect-ratio: 1;
@@ -376,7 +448,7 @@
             flex-direction: column;
             gap: 10px;
             max-width: 300px;
-            margin: 20px auto;
+            margin: 0 auto;
         }
         .apple-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
         .apple-cell { background: rgba(5, 11, 20, 0.6); border: 1px solid var(--border-clr); border-radius: 10px; padding: 12px 0; text-align: center; opacity: 0.35; }
@@ -389,7 +461,8 @@
             height: 180px;
             position: relative;
             max-width: 340px;
-            margin: 20px auto;
+            width: 100%;
+            margin: 0 auto;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -398,13 +471,28 @@
             width: 55px; height: 55px; border: 2px dashed rgba(255,255,255,0.9); border-radius: 50%;
             position: absolute; display: flex; align-items: center; justify-content: center; font-size: 1.6rem;
             background: rgba(0, 245, 212, 0.15);
+            transition: all 0.3s ease;
         }
 
         .sync-badge {
             background: rgba(255, 183, 3, 0.1); color: var(--accent-gold); border: 1px solid rgba(255, 183, 3, 0.3);
-            padding: 8px 16px; border-radius: 30px; font-size: 0.75rem; font-weight: 800; display: inline-block; margin-top: 12px;
+            padding: 8px 16px; border-radius: 30px; font-size: 0.75rem; font-weight: 800; display: inline-block; margin-top: 20px;
         }
 
+        /* ЭФФЕКТ СКАНИРОВАНИЯ НЕЙРОСЕТИ */
+        .scanning-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 11, 20, 0.85); backdrop-filter: blur(10px);
+            display: none; flex-direction: column; align-items: center; justify-content: center;
+            border-radius: 24px; z-index: 10;
+        }
+        .scanner-ring {
+            width: 50px; height: 50px; border: 3px solid rgba(0,245,212,0.2); border-top-color: var(--accent-green);
+            border-radius: 50%; animation: spinRing 0.8s linear infinite; margin-bottom: 12px;
+        }
+        @keyframes spinRing { to { transform: rotate(360deg); } }
+
+        /* МОДАЛКА */
         #modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(5, 11, 20, 0.85); backdrop-filter: blur(20px);
@@ -429,18 +517,25 @@
             <span class="vip-badge">VIP AI</span>
             <span class="brand-name">LEON <span>PREDICT</span></span>
         </div>
-        <div class="user-balance" onclick="openModal()">💰 1.000 TRY</div>
+        <div class="header-right">
+            <div class="ai-status-pill">
+                <div class="pulse-dot"></div>
+                <span>AI: <strong id="accuracyRate">98.4</strong>%</span>
+            </div>
+            <div class="user-balance" onclick="openModal()" id="balanceDisplay">💰 1.000 TRY</div>
+        </div>
     </header>
 
     <div class="container">
+        <!-- БЛОК С 10 ПОБЕДИТЕЛЯМИ -->
         <div class="winners-ticker-box">
             <div class="ticker-header">
                 <span>🏆 Canlı Kazananlar Akışı (10 Son Kazanç)</span>
             </div>
-            <div class="ticker-list" id="tickerList">
-                </div>
+            <div class="ticker-list" id="tickerList"></div>
         </div>
 
+        <!-- AUTH STEP -->
         <div id="auth-screen" class="card">
             <div style="font-size: 2.8rem; margin-bottom: 15px;">🚀</div>
             <h2>Güvenli Doğrulama</h2>
@@ -449,6 +544,7 @@
             <button class="main-btn" onclick="login()">Sisteme Giriş Yap</button>
         </div>
 
+        <!-- DASHBOARD -->
         <div id="dashboard">
             <div class="section-title">⚡ Oyun Stratejisi ve Analiz Seçin</div>
             <div class="games-grid">
@@ -475,13 +571,29 @@
             </div>
         </div>
 
+        <!-- GAMEPLAY SCREEN -->
         <div id="gameplay">
             <div class="navigation-top">
                 <button class="back-btn" onclick="goHome()">← Oyun Menüsü</button>
                 <span id="currentGameLabel" style="font-weight: 800; color: var(--accent-gold); font-size: 1.1rem;">Aviator</span>
             </div>
 
+            <!-- ШКАЛА ПРОГРЕССА БОНУСА -->
+            <div class="bonus-progress-box">
+                <div class="bonus-info">
+                    <span>🔥 VIP Sinyal Bonusu</span>
+                    <span id="progressText">Seviye 1 / 4</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" id="bonusProgressFill" style="width: 25%;"></div>
+                </div>
+            </div>
+
             <div class="game-screen-box">
+                <div class="scanning-overlay" id="scanningOverlay">
+                    <div class="scanner-ring"></div>
+                    <div style="font-weight: 800; font-size: 0.85rem; color: var(--accent-green); letter-spacing: 1px;">YAPAY ZEKA HESAPLIYOR...</div>
+                </div>
                 <div id="game-content-area"></div>
                 <div class="sync-badge">⚡ NÖRAL ALGORİTMA AKTİF</div>
             </div>
@@ -490,6 +602,10 @@
         </div>
     </div>
 
+    <!-- ТОСТЫ (УВЕДОМЛЕНИЯ В УГЛУ) -->
+    <div id="toast-container"></div>
+
+    <!-- МОДАЛКА -->
     <div id="modal-overlay">
         <div class="modal-content">
             <div class="modal-title">⚠️ Senkronizasyon Sınırı</div>
@@ -503,8 +619,9 @@
     </div>
 
     <script>
-        let signalClicks = 0;
         let currentGame = '';
+        let currentBalance = 1000;
+        let predictionClicks = 0;
 
         const winnerNames = [
             "Emre T.", "Burak Y.", "Murat K.", "Ahmet S.", "Oğuzhan D.", 
@@ -512,7 +629,6 @@
             "Mert G.", "Selin Ö.", "Kaan P.", "Yusuf E.", "Deniz F."
         ];
         const winnerGames = ["Aviator", "Mines 5x5", "Apple Fortune", "Penalty"];
-
         let winnersList = [];
 
         function generateRandomWinnerObj() {
@@ -522,7 +638,6 @@
             return { name, game, amount };
         }
 
-        // Заполняем ровно 10 штук при загрузке
         function initWinners() {
             for(let i=0; i<10; i++) {
                 winnersList.push(generateRandomWinnerObj());
@@ -539,24 +654,52 @@
                 const div = document.createElement('div');
                 div.className = 'winner-item';
                 if(isUpdate && index === 0) {
-                    div.classList.add('new-item'); // Анимация для нового сверху
+                    div.classList.add('new-item');
                 }
                 div.innerHTML = `<span>${w.name} (${w.game})</span> <b>${w.amount}</b>`;
                 listContainer.appendChild(div);
             });
         }
 
-        // Каждые 2 секунды добавляем сверху новый элемент, а нижний удаляем
         function updateWinnersTicker() {
             winnersList.unshift(generateRandomWinnerObj());
-            if(winnersList.length > 10) {
-                winnersList.pop(); // Держим строго 10 элементов
-            }
+            if(winnersList.length > 10) winnersList.pop();
             renderWinners(true);
         }
 
         setInterval(updateWinnersTicker, 2000);
         window.onload = initWinners;
+
+        // Живые плавающие уведомления о победах в углу
+        function spawnToastNotification() {
+            const container = document.getElementById('toast-container');
+            if(!container) return;
+            const w = generateRandomWinnerObj();
+            const toast = document.createElement('div');
+            toast.className = 'toast-card';
+            toast.innerHTML = `
+                <div class="toast-icon">🎉</div>
+                <div class="toast-text">
+                    <b>${w.name}</b> (${w.game})<br>az önce <b>${w.amount}</b> kazandı!
+                </div>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => { toast.remove(); }, 4000);
+        }
+        setInterval(spawnToastNotification, 7000);
+
+        // Плавное изменение процента точности AI
+        setInterval(() => {
+            const el = document.getElementById('accuracyRate');
+            if(el) {
+                const randomAcc = (97 + Math.random() * 2.5).toFixed(1);
+                el.textContent = randomAcc;
+            }
+        }, 3500);
+
+        function updateBalanceUI() {
+            document.getElementById('balanceDisplay').textContent = `💰 ${currentBalance.toLocaleString('tr-TR')} TRY`;
+        }
 
         function login() {
             const pinVal = document.getElementById('pin').value;
@@ -573,13 +716,22 @@
             document.getElementById('dashboard').style.display = 'none';
             document.getElementById('gameplay').style.display = 'block';
             document.getElementById('currentGameLabel').textContent = gameName;
-            signalClicks = 0;
+            predictionClicks = 0;
+            updateProgressUI();
             renderGameInterface();
         }
 
         function goHome() {
             document.getElementById('gameplay').style.display = 'none';
             document.getElementById('dashboard').style.display = 'block';
+        }
+
+        function updateProgressUI() {
+            const fill = document.getElementById('bonusProgressFill');
+            const txt = document.getElementById('progressText');
+            const p = (predictionClicks + 1) * 25;
+            if(fill) fill.style.width = `${Math.min(p, 100)}%`;
+            if(txt) txt.textContent = `Seviye ${Math.min(predictionClicks + 1, 4)} / 4`;
         }
 
         function renderGameInterface() {
@@ -621,26 +773,43 @@
         }
 
         function triggerPrediction() {
-            signalClicks++;
-            if(signalClicks >= 3) {
+            if (currentBalance > 0) {
+                currentBalance -= 250;
+                if (currentBalance < 0) currentBalance = 0;
+                updateBalanceUI();
+            }
+
+            if(currentBalance <= 0) {
                 openModal();
-                signalClicks = 0;
                 return;
             }
 
-            if (currentGame === 'Aviator') {
-                const multipliers = ['1.85x', '3.10x', '2.65x', '5.40x', '1.42x', '4.80x', '2.15x', '7.20x'];
-                const val = multipliers[Math.floor(Math.random() * multipliers.length)];
-                const elem = document.getElementById('aviatorVal');
-                elem.style.opacity = '0';
-                setTimeout(() => { elem.textContent = val; elem.style.opacity = '1'; }, 150);
-            } else if (currentGame === 'Mines') {
-                generateMines();
-            } else if (currentGame === 'Apple Fortune') {
-                generateApples();
-            } else if (currentGame === 'Penalty') {
-                generatePenalty();
-            }
+            // Показываем анимацию сканирования нейросети на 0.6 секунды
+            const overlay = document.getElementById('scanningOverlay');
+            if(overlay) overlay.style.display = 'flex';
+
+            setTimeout(() => {
+                if(overlay) overlay.style.display = 'none';
+
+                predictionClicks++;
+                updateProgressUI();
+
+                if (currentGame === 'Aviator') {
+                    const multipliers = ['1.85x', '3.10x', '2.65x', '5.40x', '1.42x', '4.80x', '2.15x', '7.20x'];
+                    const val = multipliers[Math.floor(Math.random() * multipliers.length)];
+                    const elem = document.getElementById('aviatorVal');
+                    if(elem) {
+                        elem.style.opacity = '0';
+                        setTimeout(() => { elem.textContent = val; elem.style.opacity = '1'; }, 100);
+                    }
+                } else if (currentGame === 'Mines') {
+                    generateMines();
+                } else if (currentGame === 'Apple Fortune') {
+                    generateApples();
+                } else if (currentGame === 'Penalty') {
+                    generatePenalty();
+                }
+            }, 600);
         }
 
         function generateMines() {
