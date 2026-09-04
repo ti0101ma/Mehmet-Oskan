@@ -484,7 +484,7 @@
                 <div class="pulse-dot"></div>
                 <span>AI: <strong id="accuracyRate">98.4</strong>%</span>
             </div>
-            <div class="user-balance" onclick="playBeep(600, 0.05); openModal();" id="balanceDisplay">₺ 5.000</div>
+            <div class="user-balance" onclick="playBeep(600, 0.05); openModal();" id="balanceDisplay">Kalan Hak: 10/10</div>
         </div>
     </header>
 
@@ -541,11 +541,11 @@
 
             <div class="bonus-progress-box">
                 <div class="bonus-info">
-                    <span>🔥 VIP Sinyal Bonusu</span>
-                    <span id="progressText">Seviye 1 / 2</span>
+                    <span>🔥 Kalan Ücretsiz Sinyal</span>
+                    <span id="progressText">10 / 10 Hak</span>
                 </div>
                 <div class="progress-track">
-                    <div class="progress-fill" id="bonusProgressFill" style="width: 50%;"></div>
+                    <div class="progress-fill" id="bonusProgressFill" style="width: 100%;"></div>
                 </div>
             </div>
 
@@ -568,9 +568,9 @@
     <!-- MODAL -->
     <div id="modal-overlay">
         <div class="modal-content">
-            <div class="modal-title" id="modalTitle">⚠️ Bakiye ve Doğrulama Hatası</div>
+            <div class="modal-title" id="modalTitle">⚠️ Haklarınız Tükendi</div>
             <div class="modal-text" id="modalText">
-                VIP sinyallere erişmek için hesabınızı doğrulamanız ve bakiyenizi güncellemeniz gerekmektedir:
+                10 ücretsiz deneme hakkınızı kullandınız. Sınırsız VIP sinyallere devam etmek için lütfen hesabınızı güncelleyin:
             </div>
             <a href="https://sp1nwin.com/rcyQnv" target="_blank" class="action-link">LEON'da Etkinleştir</a>
             <br>
@@ -602,7 +602,7 @@
         }
 
         let currentGame = '';
-        let currentBalance = 5000;
+        let remainingSpins = 10;
         let predictionClicks = 0;
 
         const winnerNames = [
@@ -679,14 +679,13 @@
         }, 3500);
 
         function updateBalanceUI() {
-            document.getElementById('balanceDisplay').textContent = `₺ ${currentBalance.toLocaleString('tr-TR')}`;
+            document.getElementById('balanceDisplay').textContent = `Kalan Hak: ${remainingSpins}/10`;
         }
 
         function login() {
             const pinInput = document.getElementById('pin');
             const pinVal = pinInput.value.trim();
             
-            // Проверка правильного кода "1221"
             if(pinVal === '1221') {
                 document.getElementById('auth-screen').style.display = 'none';
                 document.getElementById('dashboard').style.display = 'block';
@@ -702,7 +701,6 @@
             document.getElementById('dashboard').style.display = 'none';
             document.getElementById('gameplay').style.display = 'block';
             document.getElementById('currentGameLabel').textContent = gameName;
-            predictionClicks = 0;
             updateProgressUI();
             renderGameInterface();
         }
@@ -715,10 +713,9 @@
         function updateProgressUI() {
             const fill = document.getElementById('bonusProgressFill');
             const txt = document.getElementById('progressText');
-            const step = (predictionClicks % 2);
-            const p = (step + 1) * 50;
+            const p = (remainingSpins / 10) * 100;
             if(fill) fill.style.width = `${p}%`;
-            if(txt) txt.textContent = `Seviye ${step + 1} / 2`;
+            if(txt) txt.textContent = `${remainingSpins} / 10 Hak`;
         }
 
         function renderGameInterface() {
@@ -760,27 +757,22 @@
         }
 
         function triggerPrediction() {
-            if (currentBalance > 0) {
-                currentBalance -= 2500;
-                if (currentBalance < 0) currentBalance = 0;
-                updateBalanceUI();
-            }
-
-            if(currentBalance <= 0) {
-                document.getElementById('modalTitle').textContent = '⚠️ Senkronizasyon Sınırı';
-                document.getElementById('modalText').textContent = 'Deneme bakiyeniz tükendi. Sınırsız LEON VIP sinyallerinin kilidini açmak için kayıt olun veya hesabınıza para yatırın:';
+            if (remainingSpins <= 0) {
+                document.getElementById('modalTitle').textContent = '⚠️ Haklarınız Tükendi';
+                document.getElementById('modalText').textContent = '10 ücretsiz deneme hakkınızı kullandınız. Sınırsız VIP sinyallerinin kilidini açmak için kayıt olun veya hesabınıza para yatırın:';
                 openModal();
                 return;
             }
+
+            remainingSpins--;
+            updateBalanceUI();
+            updateProgressUI();
 
             const overlay = document.getElementById('scanningOverlay');
             if(overlay) overlay.style.display = 'flex';
 
             setTimeout(() => {
                 if(overlay) overlay.style.display = 'none';
-
-                predictionClicks++;
-                updateProgressUI();
                 playBeep(1200, 0.08);
 
                 if (currentGame === 'Aviator') {
@@ -797,6 +789,14 @@
                     generateApples();
                 } else if (currentGame === 'Penalty') {
                     generatePenalty();
+                }
+
+                if (remainingSpins <= 0) {
+                    setTimeout(() => {
+                        document.getElementById('modalTitle').textContent = '⚠️ Haklarınız Tükendi';
+                        document.getElementById('modalText').textContent = '10 ücretsiz deneme hakkınızı kullandınız. Sınırsız VIP sinyallerinin kilidini açmak için kayıt olun veya hesabınıza para yatırın:';
+                        openModal();
+                    }, 600);
                 }
             }, 500);
         }
